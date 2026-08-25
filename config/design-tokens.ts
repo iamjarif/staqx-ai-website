@@ -1,0 +1,222 @@
+/**
+ * Design tokens synced from Figma — StaqX.ai Website UI
+ * Source: local paint styles, text styles, and variable collections
+ */
+
+export const colors = {
+  primary: {
+    50: "#fff4eb",
+    100: "#ffe4cc",
+    200: "#ffc999",
+    300: "#ffad66",
+    400: "#ff9540",
+    500: "#ff7d12",
+    600: "#e56800",
+    700: "#b85400",
+    800: "#8a3f00",
+    900: "#5c2a00",
+  },
+  brand: {
+    hover: "#e56800",
+    active: "#b85400",
+    pressed: "#8a3f00",
+    selected: "#2a1400",
+    disabled: "#5c2a00",
+    focus: "#ff7d12",
+    focusRing: "#ffad66",
+    background: "#2a1400",
+    border: "#e56800",
+    text: "#ff9540",
+  },
+  neutral: {
+    white: "#ffffff",
+    black: "#000000",
+    25: "#fcfcfd",
+    50: "#f9fafb",
+    100: "#f3f4f6",
+    200: "#e5e7eb",
+    300: "#d1d5db",
+    400: "#9ca3af",
+    500: "#6b7280",
+    600: "#4b5563",
+    700: "#374151",
+    800: "#1f2937",
+    900: "#111827",
+  },
+  text: {
+    primary: "#fafafa",
+    secondary: "#d1d5db",
+    tertiary: "#9ca3af",
+    disabled: "#4b5563",
+    inverse: "#111111",
+    brand: "#ff9540",
+    link: "#ff9540",
+    linkHover: "#ffad66",
+    linkVisited: "#e56800",
+  },
+  surface: {
+    page: "#000000",
+    section: "#0a0a0a",
+    card: "#131313",
+    elevated: "#1a1a1a",
+    hover: "#1f1f1f",
+    selected: "#2a1400",
+    disabled: "#1a1a1a",
+    overlay: "rgba(0, 0, 0, 0.7)",
+  },
+  border: {
+    default: "#262626",
+    strong: "#3f3f3f",
+    subtle: "#1a1a1a",
+    divider: "#262626",
+    focus: "#ff7d12",
+    brand: "#e56800",
+    disabled: "#262626",
+  },
+  feedback: {
+    success: {
+      background: "#0f2818",
+      border: "#1e4a2e",
+      text: "#4ade80",
+      base: "#22c55e",
+    },
+    warning: {
+      background: "#2a2008",
+      border: "#4d3b12",
+      text: "#fbbf24",
+      base: "#f59e0b",
+    },
+    error: {
+      background: "#2a1010",
+      border: "#4d1f1f",
+      text: "#f87171",
+      base: "#ef4444",
+    },
+    info: {
+      background: "#0f1b2e",
+      border: "#1e3a5f",
+      text: "#60a5fa",
+      base: "#3b82f6",
+    },
+  },
+  /** Figma paint styles */
+  styles: {
+    primary: "#ff7d12",
+    secondary: "#e5e7eb",
+    textPrimary: "#fafafa",
+    textSecondary: "#d1d5db",
+    textTertiary: "#9ca3af",
+    textDisabled: "#4b5563",
+    textInverse: "#111111",
+    textBrand: "#ff9540",
+    backgroundPage: "#000000",
+    backgroundSection: "#0a0a0a",
+    backgroundCard: "#131313",
+    borderDefault: "#262626",
+    borderStrong: "#3f3f3f",
+    borderFocus: "#ff7d12",
+    borderBrand: "#e56800",
+  },
+} as const;
+
+export const spacing = {
+  2: 2,
+  4: 4,
+  8: 8,
+  12: 12,
+  16: 16,
+  20: 20,
+  24: 24,
+  32: 32,
+  40: 40,
+  48: 48,
+  56: 56,
+  64: 64,
+  72: 72,
+  80: 80,
+  96: 96,
+  120: 120,
+  160: 160,
+} as const;
+
+export const radius = {
+  0: 0,
+  2: 2,
+  4: 4,
+  6: 6,
+  8: 8,
+  12: 12,
+  16: 16,
+  20: 20,
+  24: 24,
+  32: 32,
+  pill: 9999,
+  full: 9999,
+} as const;
+
+export const typography = {
+  fontFamily: "DM Sans",
+  display: {
+    xl: { size: 72, lineHeight: 80, weight: 700, letterSpacing: -1.4 },
+    l: { size: 56, lineHeight: 64, weight: 700, letterSpacing: -1.4 },
+    m: { size: 44, lineHeight: 52, weight: 700, letterSpacing: -1.4 },
+  },
+  heading: {
+    h1: { size: 40, lineHeight: 48, weight: 600, letterSpacing: -1.4 },
+    h2: { size: 32, lineHeight: 40, weight: 600, letterSpacing: -1.4 },
+    h3: { size: 28, lineHeight: 36, weight: 600, letterSpacing: -1.4 },
+    h4: { size: 24, lineHeight: 32, weight: 600, letterSpacing: -1.4 },
+    h5: { size: 20, lineHeight: 28, weight: 600, letterSpacing: -1.4 },
+    h6: { size: 18, lineHeight: 26, weight: 600, letterSpacing: -1.4 },
+  },
+  body: {
+    large: { size: 18, lineHeight: 28, weight: 400, letterSpacing: -0.6 },
+    medium: { size: 16, lineHeight: 24, weight: 400, letterSpacing: -0.6 },
+    small: { size: 14, lineHeight: 20, weight: 400, letterSpacing: -0.6 },
+  },
+  button: {
+    large: { size: 16, lineHeight: 20, weight: 500, letterSpacing: -0.6 },
+    medium: { size: 14, lineHeight: 18, weight: 500, letterSpacing: -0.6 },
+    small: { size: 13, lineHeight: 16, weight: 500, letterSpacing: -0.6 },
+  },
+  label: {
+    large: { size: 14, lineHeight: 20, weight: 500, letterSpacing: -0.6 },
+    medium: { size: 13, lineHeight: 18, weight: 500, letterSpacing: -0.6 },
+    small: { size: 12, lineHeight: 16, weight: 500, letterSpacing: -0.6 },
+  },
+  overline: {
+    size: 16,
+    lineHeight: 24,
+    weight: 400,
+    letterSpacing: 3.6,
+    textTransform: "uppercase" as const,
+  },
+  code: {
+    size: 14,
+    lineHeight: 20,
+    weight: 400,
+    letterSpacing: 3.6,
+    textTransform: "uppercase" as const,
+  },
+  eyebrow: {
+    size: 13,
+    lineHeight: 16,
+    weight: 700,
+    letterSpacing: 3.6,
+  },
+  caption: {
+    size: 12,
+    lineHeight: 16,
+    weight: 400,
+    letterSpacing: 3.6,
+  },
+} as const;
+
+export const designTokens = {
+  colors,
+  spacing,
+  radius,
+  typography,
+} as const;
+
+export type DesignTokens = typeof designTokens;

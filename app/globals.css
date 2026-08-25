@@ -1,26 +1,140 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "../styles/tokens.css";
+@import "../styles/typography.css";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Primary scale */
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+
+  /* Brand states */
+  --color-brand-hover: var(--color-brand-hover);
+  --color-brand-active: var(--color-brand-active);
+  --color-brand-pressed: var(--color-brand-pressed);
+  --color-brand-selected: var(--color-brand-selected);
+  --color-brand-disabled: var(--color-brand-disabled);
+  --color-brand-focus: var(--color-brand-focus);
+  --color-brand-focus-ring: var(--color-brand-focus-ring);
+  --color-brand-background: var(--color-brand-background);
+  --color-brand-border: var(--color-brand-border);
+  --color-brand-text: var(--color-brand-text);
+
+  /* Neutral */
+  --color-white: var(--color-white);
+  --color-black: var(--color-black);
+  --color-gray-25: var(--color-gray-25);
+  --color-gray-50: var(--color-gray-50);
+  --color-gray-100: var(--color-gray-100);
+  --color-gray-200: var(--color-gray-200);
+  --color-gray-300: var(--color-gray-300);
+  --color-gray-400: var(--color-gray-400);
+  --color-gray-500: var(--color-gray-500);
+  --color-gray-600: var(--color-gray-600);
+  --color-gray-700: var(--color-gray-700);
+  --color-gray-800: var(--color-gray-800);
+  --color-gray-900: var(--color-gray-900);
+
+  /* Semantic text */
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-tertiary: var(--color-text-tertiary);
+  --color-text-disabled: var(--color-text-disabled);
+  --color-text-inverse: var(--color-text-inverse);
+  --color-text-brand: var(--color-text-brand);
+  --color-text-link: var(--color-text-link);
+  --color-text-link-hover: var(--color-text-link-hover);
+  --color-text-link-visited: var(--color-text-link-visited);
+
+  /* Semantic surface */
+  --color-surface-page: var(--color-surface-page);
+  --color-surface-section: var(--color-surface-section);
+  --color-surface-card: var(--color-surface-card);
+  --color-surface-elevated: var(--color-surface-elevated);
+  --color-surface-hover: var(--color-surface-hover);
+  --color-surface-selected: var(--color-surface-selected);
+  --color-surface-disabled: var(--color-surface-disabled);
+  --color-surface-overlay: var(--color-surface-overlay);
+
+  /* Semantic border */
+  --color-border-default: var(--color-border-default);
+  --color-border-strong: var(--color-border-strong);
+  --color-border-subtle: var(--color-border-subtle);
+  --color-border-divider: var(--color-border-divider);
+  --color-border-focus: var(--color-border-focus);
+  --color-border-brand: var(--color-border-brand);
+  --color-border-disabled: var(--color-border-disabled);
+
+  /* Feedback */
+  --color-success-background: var(--color-success-background);
+  --color-success-border: var(--color-success-border);
+  --color-success-text: var(--color-success-text);
+  --color-success-base: var(--color-success-base);
+  --color-warning-background: var(--color-warning-background);
+  --color-warning-border: var(--color-warning-border);
+  --color-warning-text: var(--color-warning-text);
+  --color-warning-base: var(--color-warning-base);
+  --color-error-background: var(--color-error-background);
+  --color-error-border: var(--color-error-border);
+  --color-error-text: var(--color-error-text);
+  --color-error-base: var(--color-error-base);
+  --color-info-background: var(--color-info-background);
+  --color-info-border: var(--color-info-border);
+  --color-info-text: var(--color-info-text);
+  --color-info-base: var(--color-info-base);
+
+  /* Radius tokens — do not map Figma spacing onto Tailwind's spacing scale.
+     Tailwind p-8 = 32px, which already matches Figma Spacing/32. */
+  --radius-2: var(--radius-2);
+  --radius-4: var(--radius-4);
+  --radius-6: var(--radius-6);
+  --radius-8: var(--radius-8);
+  --radius-12: var(--radius-12);
+  --radius-16: var(--radius-16);
+  --radius-20: var(--radius-20);
+  --radius-24: var(--radius-24);
+  --radius-32: var(--radius-32);
+  --radius-pill: var(--radius-pill);
+  --radius-full: var(--radius-full);
+
+  --font-sans: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
+html {
+  overflow-x: clip;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: clip;
+  background: var(--color-surface-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background-color: var(--color-primary-500);
+  color: var(--color-text-inverse);
+}
+
+::-moz-selection {
+  background-color: var(--color-primary-500);
+  color: var(--color-text-inverse);
 }

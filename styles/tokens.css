@@ -1,0 +1,147 @@
+:root {
+  /* Brand — Primary scale */
+  --color-primary-50: #fff4eb;
+  --color-primary-100: #ffe4cc;
+  --color-primary-200: #ffc999;
+  --color-primary-300: #ffad66;
+  --color-primary-400: #ff9540;
+  --color-primary-500: #ff7d12;
+  --color-primary-600: #e56800;
+  --color-primary-700: #b85400;
+  --color-primary-800: #8a3f00;
+  --color-primary-900: #5c2a00;
+
+  /* Brand — States */
+  --color-brand-hover: #e56800;
+  --color-brand-active: #b85400;
+  --color-brand-pressed: #8a3f00;
+  --color-brand-selected: #2a1400;
+  --color-brand-disabled: #5c2a00;
+  --color-brand-focus: #ff7d12;
+  --color-brand-focus-ring: #ffad66;
+  --color-brand-background: #2a1400;
+  --color-brand-border: #e56800;
+  --color-brand-text: #ff9540;
+
+  /* Neutral */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-25: #fcfcfd;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* Semantic — Text */
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #d1d5db;
+  --color-text-tertiary: #9ca3af;
+  --color-text-disabled: #4b5563;
+  --color-text-inverse: #111111;
+  --color-text-brand: #ff9540;
+  --color-text-link: #ff9540;
+  --color-text-link-hover: #ffad66;
+  --color-text-link-visited: #e56800;
+
+  /* Semantic — Surface */
+  --color-surface-page: #000000;
+  --color-surface-section: #0a0a0a;
+  --color-surface-card: #131313;
+  --color-surface-elevated: #1a1a1a;
+  --color-surface-hover: #1f1f1f;
+  --color-surface-selected: #2a1400;
+  --color-surface-disabled: #1a1a1a;
+  --color-surface-overlay: rgba(0, 0, 0, 0.7);
+
+  /* Semantic — Border */
+  --color-border-default: #262626;
+  --color-border-strong: #3f3f3f;
+  --color-border-subtle: #1a1a1a;
+  --color-border-divider: #262626;
+  --color-border-focus: #ff7d12;
+  --color-border-brand: #e56800;
+  --color-border-disabled: #262626;
+
+  /* Feedback — Success */
+  --color-success-background: #0f2818;
+  --color-success-border: #1e4a2e;
+  --color-success-text: #4ade80;
+  --color-success-base: #22c55e;
+
+  /* Feedback — Warning */
+  --color-warning-background: #2a2008;
+  --color-warning-border: #4d3b12;
+  --color-warning-text: #fbbf24;
+  --color-warning-base: #f59e0b;
+
+  /* Feedback — Error */
+  --color-error-background: #2a1010;
+  --color-error-border: #4d1f1f;
+  --color-error-text: #f87171;
+  --color-error-base: #ef4444;
+
+  /* Feedback — Info */
+  --color-info-background: #0f1b2e;
+  --color-info-border: #1e3a5f;
+  --color-info-text: #60a5fa;
+  --color-info-base: #3b82f6;
+
+  /* Figma color styles (paint styles) */
+  --color-style-primary: #ff7d12;
+  --color-style-secondary: #e5e7eb;
+  --color-style-text-primary: #fafafa;
+  --color-style-text-secondary: #d1d5db;
+  --color-style-text-tertiary: #9ca3af;
+  --color-style-text-disabled: #4b5563;
+  --color-style-text-inverse: #111111;
+  --color-style-text-brand: #ff9540;
+  --color-style-background-page: #000000;
+  --color-style-background-section: #0a0a0a;
+  --color-style-background-card: #131313;
+  --color-style-border-default: #262626;
+  --color-style-border-strong: #3f3f3f;
+  --color-style-border-focus: #ff7d12;
+  --color-style-border-brand: #e56800;
+
+  /* Spacing */
+  --spacing-2: 2px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-56: 56px;
+  --spacing-64: 64px;
+  --spacing-72: 72px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-120: 120px;
+  --spacing-160: 160px;
+
+  /* Radius */
+  --radius-0: 0px;
+  --radius-2: 2px;
+  --radius-4: 4px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-32: 32px;
+  --radius-pill: 9999px;
+  --radius-full: 9999px;
+
+  /* Typography — font family set in layout via next/font */
+  --font-sans: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
+}
