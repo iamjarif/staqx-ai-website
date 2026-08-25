@@ -1,6 +1,7 @@
 {
   "name": "staqx-ai-website",
   "version": "0.1.0",
+  "description": "Official marketing website for StaqX.ai — a Next.js site showcasing IC engineering services, company information, and a Sanity-powered blog.",
   "private": true,
   "scripts": {
     "dev": "next dev",

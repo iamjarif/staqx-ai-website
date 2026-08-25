@@ -1,84 +1,236 @@
-# Project
+# StaqX.ai Website
 
-Production-ready foundation for a Next.js website. UI and content will be implemented from a Figma design in a later step.
+The official marketing website for **StaqX.ai** — a specialized semiconductor design partner delivering end-to-end IC engineering services from architecture to silicon.
+
+**Live site:** [staqx.ai](https://staqx.ai)  
+**Repository:** [github.com/iamjarif/staqx-ai-website](https://github.com/iamjarif/staqx-ai-website)
+
+---
+
+## Project Description
+
+This repository contains the source code for the StaqX.ai public-facing website — a modern, performance-focused marketing site built with Next.js. It serves two purposes:
+
+1. **For visitors** — A single-page homepage that presents StaqX.ai's IC engineering services, engagement models, security practices, and contact options, plus a blog for technical insights and company updates.
+2. **For developers** — A production-ready Next.js application with a clear component architecture, Figma-aligned design tokens, Sanity CMS integration for blog content, and SEO infrastructure (metadata, JSON-LD, sitemap, robots).
+
+The homepage content (copy, services, work steps, engagement models) lives in static TypeScript data files for fast loads and easy updates. Blog posts are managed in Sanity and fetched at runtime with incremental static revalidation. The UI is built from reusable section components, animated with Motion and Lenis smooth scrolling, and styled with Tailwind CSS using semantic design tokens synced from Figma.
+
+---
+
+## About StaqX.ai
+
+StaqX.ai provides silicon-proven VLSI solutions across advanced process nodes for clients in power electronics, telecommunications, automotive, and IoT. The company covers the full IC engineering lifecycle — from device physics and TCAD simulation through physical design, AMS verification, and signoff.
+
+### What this site includes
+
+| Page / section | Description |
+| --- | --- |
+| **Homepage** | Hero, mission statement, expertise carousel, work process, engagement models, security, blog preview, and contact form |
+| **Blog index** (`/blogs`) | Paginated list of engineering articles and company updates |
+| **Blog posts** (`/blogs/[slug]`) | Individual articles with Portable Text rendering, reading time, and related posts |
+| **SEO** | Open Graph metadata, JSON-LD structured data, sitemap, and robots.txt |
+
+### Services highlighted on the site
+
+- 3D-IC Design
+- Silicon Photonics
+- RF & Analog
+- TCAD Simulation
+- Quantum Computing
+- Physical Design (RTL-to-GDSII)
+- AMS Verification
+
+---
 
 ## Tech Stack
 
-- **Next.js** (App Router)
-- **React**
-- **TypeScript**
-- **Tailwind CSS**
-- **Motion** (animation foundation)
-- **Lucide React** (icons)
-- **Zod** (validation)
-- **class-variance-authority**, **clsx**, **tailwind-merge** (styling utilities)
+| Layer | Technology |
+| --- | --- |
+| Framework | [Next.js 16](https://nextjs.org/) (App Router) |
+| Language | TypeScript |
+| UI | React 19, Tailwind CSS 4 |
+| Animation | [Motion](https://motion.dev/), [Lenis](https://lenis.darkroom.engineering/) (smooth scroll) |
+| CMS | [Sanity](https://www.sanity.io/) via `next-sanity` |
+| Icons | Phosphor Icons |
+| Styling utilities | `clsx`, `tailwind-merge`, `class-variance-authority` |
+
+---
 
 ## Getting Started
 
-Install dependencies:
+### Prerequisites
+
+- **Node.js** 20 or later
+- **npm** (ships with Node)
+
+### 1. Clone and install
 
 ```bash
+git clone https://github.com/iamjarif/staqx-ai-website.git
+cd staqx-ai-website
 npm install
 ```
 
-Copy environment variables:
+### 2. Configure environment
+
+Copy the example env file and fill in the values:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Start the development server:
+See [Environment Variables](#environment-variables) below for details. The site runs without Sanity credentials, but blog pages will show empty states until CMS values are set.
+
+### 3. Run the development server
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000). The dev server supports hot reload for both pages and components.
 
-## Development
-
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start development server |
-| `npm run lint` | Run ESLint |
-| `npm run typecheck` | Run TypeScript checks |
-| `npm run format` | Format code with Prettier |
-| `npm run format:check` | Check formatting |
-
-## Production Build
+### 4. Production build
 
 ```bash
 npm run build
 npm run start
 ```
 
-## Project Structure
-
-```
-app/                  Next.js App Router pages and layouts
-components/
-  ui/                 UI primitives (Button, Container, etc.)
-  layout/             Header, Footer, Navigation (future)
-  sections/           Page sections from Figma (future)
-  shared/             Shared non-primitive components (future)
-config/               Site configuration
-hooks/                Custom React hooks (future)
-lib/                  Utilities and helpers
-public/
-  images/             Static images
-  icons/              Static icons
-  fonts/              Local font files (if needed)
-types/                Shared TypeScript types
-```
-
-## Code Architecture
-
-- **Server Components by default** — use `"use client"` only when client-side behavior is required.
-- **Small client boundaries** — keep interactive components focused and isolated.
-- **Design-agnostic foundation** — visual tokens, typography, and sections will be added from Figma.
-- **Centralized config** — site metadata and navigation live in `config/site.ts`.
-- **Styling** — Tailwind CSS with a `cn()` utility for conditional classes.
+---
 
 ## Environment Variables
 
-See `.env.example` for documented variables. Set values in `.env.local` for local development. Never commit secrets.
+| Variable | Required | Description |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Recommended | Canonical site URL used in metadata, sitemap, and Open Graph tags (e.g. `https://staqx.ai`) |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | For blog | Sanity project ID — shared with the Boston Semiconductor CMS |
+| `NEXT_PUBLIC_SANITY_DATASET` | No | Sanity dataset name (default: `production`) |
+| `NEXT_PUBLIC_SANITY_API_VERSION` | No | Sanity API version (default: `2024-01-01`) |
+| `SANITY_API_READ_TOKEN` | No | Read token — only needed if the Sanity dataset is private |
+
+Never commit `.env.local` or any file containing secrets. `.env.example` is the reference for all supported variables.
+
+---
+
+## Project Structure
+
+```
+staqx-ai-website/
+├── app/                          # Next.js App Router
+│   ├── layout.tsx                # Root layout (fonts, Lenis, JSON-LD)
+│   ├── page.tsx                  # Homepage
+│   ├── blogs/                    # Blog index and dynamic post routes
+│   ├── robots.ts                 # robots.txt generation
+│   ├── sitemap.ts                # Dynamic sitemap (includes blog posts)
+│   └── globals.css               # Global styles and Tailwind imports
+│
+├── components/
+│   ├── blog/                     # BlogCard, BlogPostArticle, PortableText renderer
+│   ├── layout/                   # Header, Footer
+│   ├── providers/                # LenisProvider (smooth scroll)
+│   ├── sections/                 # Homepage sections (Hero, Expertise, Contact, etc.)
+│   ├── seo/                      # JSON-LD helper
+│   └── ui/                       # Primitives — Button, Container, Section, Logo, etc.
+│
+├── config/
+│   ├── site.ts                   # Site name, description, navigation, social links
+│   └── design-tokens.ts          # Colors, spacing, typography (synced from Figma)
+│
+├── lib/
+│   ├── blog.ts                   # Sanity blog fetch helpers
+│   ├── homepage-data.ts          # Static homepage copy and service definitions
+│   ├── metadata.ts               # Shared metadata factory
+│   ├── schema.ts                 # JSON-LD schema builders
+│   ├── sanity/                   # Sanity client and GROQ queries
+│   └── fonts.ts                  # DM Sans font configuration
+│
+├── public/
+│   ├── icons/homepage/           # SVG icons and service illustrations
+│   └── images/homepage/          # Hero, backgrounds, blog placeholder
+│
+├── styles/
+│   ├── tokens.css                # CSS custom properties from design tokens
+│   └── typography.css            # Type scale utility classes
+│
+└── types/                        # Shared TypeScript interfaces
+```
+
+---
+
+## Architecture & Conventions
+
+### Server Components first
+
+Pages and sections are **React Server Components** by default. Client components (`"use client"`) are used only where browser APIs or interactivity are required — carousels, accordions, smooth scroll, and form handling.
+
+### Content sources
+
+| Content type | Location | Notes |
+| --- | --- | --- |
+| Homepage copy & services | `lib/homepage-data.ts` | Edit text and service cards here |
+| Site metadata & nav | `config/site.ts` | Name, description, navigation links, social URLs |
+| Blog posts | Sanity CMS | Fetched at build/request time with 60s revalidation |
+| Design tokens | `config/design-tokens.ts` + `styles/tokens.css` | Synced from Figma |
+
+### Styling
+
+- **Tailwind CSS 4** with semantic token classes (`bg-surface-page`, `text-text-primary`, etc.)
+- **`cn()` utility** (`lib/utils.ts`) for conditional class merging
+- **Design tokens** live in `config/design-tokens.ts` and are exposed as CSS variables in `styles/tokens.css`
+- **Typography** scale is defined in `styles/typography.css`
+
+### SEO
+
+- `lib/metadata.ts` provides a `createMetadata()` factory used across all pages
+- `lib/schema.ts` builds Organization, WebSite, BlogPosting, and BreadcrumbList JSON-LD
+- `app/sitemap.ts` dynamically includes all published blog slugs
+- Images are served as AVIF/WebP with long-lived cache headers for static assets
+
+### Blog (Sanity CMS)
+
+Blog content is fetched from a shared Sanity project. Queries live in `lib/sanity/queries.ts`. Posts are normalized in `lib/blog.ts` with reading-time estimation and cover image handling. If Sanity is not configured, blog routes gracefully render empty states rather than crashing.
+
+To connect the CMS locally, set `NEXT_PUBLIC_SANITY_PROJECT_ID` in `.env.local`. Blog pages revalidate every 60 seconds in production.
+
+---
+
+## Available Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Next.js development server |
+| `npm run build` | Create an optimized production build |
+| `npm run start` | Serve the production build |
+| `npm run lint` | Run ESLint |
+| `npm run typecheck` | Run TypeScript type checking (`tsc --noEmit`) |
+| `npm run format` | Format all files with Prettier |
+| `npm run format:check` | Check formatting without writing changes |
+
+---
+
+## Deployment
+
+The site is designed for deployment on [Vercel](https://vercel.com/) or any Node.js hosting that supports Next.js App Router.
+
+1. Connect the GitHub repository to your hosting provider
+2. Set the environment variables listed above in the project settings
+3. Deploy — Next.js will handle static generation, ISR, and server rendering automatically
+
+Ensure `NEXT_PUBLIC_SITE_URL` matches your production domain so metadata, sitemap URLs, and canonical links are correct.
+
+---
+
+## Contributing
+
+1. Create a feature branch from `main`
+2. Make your changes and run `npm run lint`, `npm run typecheck`, and `npm run format:check`
+3. Open a pull request with a clear description of what changed and why
+
+For homepage content updates, prefer editing `lib/homepage-data.ts` and `config/site.ts` rather than hardcoding copy inside components. For visual changes, update design tokens in `config/design-tokens.ts` and `styles/tokens.css` to stay aligned with the Figma source of truth.
+
+---
+
+## License
+
+Private — © StaqX.ai. All rights reserved.
