@@ -7,17 +7,6 @@ The official marketing website for **StaqX.ai** — a specialized semiconductor 
 
 ---
 
-## Project Description
-
-This repository contains the source code for the StaqX.ai public-facing website — a modern, performance-focused marketing site built with Next.js. It serves two purposes:
-
-1. **For visitors** — A single-page homepage that presents StaqX.ai's IC engineering services, engagement models, security practices, and contact options, plus a blog for technical insights and company updates.
-2. **For developers** — A production-ready Next.js application with a clear component architecture, Figma-aligned design tokens, Sanity CMS integration for blog content, and SEO infrastructure (metadata, JSON-LD, sitemap, robots).
-
-The homepage content (copy, services, work steps, engagement models) lives in static TypeScript data files for fast loads and easy updates. Blog posts are managed in Sanity and fetched at runtime with incremental static revalidation. The UI is built from reusable section components, animated with Motion and Lenis smooth scrolling, and styled with Tailwind CSS using semantic design tokens synced from Figma.
-
----
-
 ## About StaqX.ai
 
 StaqX.ai provides silicon-proven VLSI solutions across advanced process nodes for clients in power electronics, telecommunications, automotive, and IoT. The company covers the full IC engineering lifecycle — from device physics and TCAD simulation through physical design, AMS verification, and signoff.
