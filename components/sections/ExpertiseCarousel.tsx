@@ -47,16 +47,15 @@ function ServiceCard({
   description: string;
 }) {
   return (
-    <SectionRevealItem
-      as="article"
-      className="flex h-full flex-col gap-6 overflow-hidden rounded-lg bg-surface-card p-6 sm:gap-8 sm:p-8 lg:p-[42px]"
-    >
-      <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-border-subtle p-3 sm:size-16 sm:p-4 lg:size-[86px] lg:p-[21px]">
-        <ServiceIcon id={id} />
-      </div>
-      <div className="flex flex-col gap-4">
-        <h3 className="text-heading-h4 text-text-primary">{title}</h3>
-        <p className="text-body-small text-text-tertiary leading-[1.45]">{description}</p>
+    <SectionRevealItem as="article" className="h-full">
+      <div className="service-card flex h-full flex-col gap-6 overflow-hidden rounded-lg bg-surface-card p-6 transition-[filter,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:gap-8 sm:p-8 lg:p-[42px]">
+        <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-border-subtle p-3 sm:size-16 sm:p-4 lg:size-[86px] lg:p-[21px]">
+          <ServiceIcon id={id} />
+        </div>
+        <div className="flex flex-col gap-4">
+          <h3 className="text-heading-h4 text-text-primary">{title}</h3>
+          <p className="text-body-small text-text-tertiary leading-[1.45]">{description}</p>
+        </div>
       </div>
     </SectionRevealItem>
   );
@@ -65,7 +64,7 @@ function ServiceCard({
 export function ExpertiseCarousel() {
   return (
     <Container>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+      <div className="services-grid grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
         <SectionRevealItem className="flex flex-col justify-center sm:col-span-2 lg:col-span-2">
           <SectionHeader
             eyebrow="CORE SERVICES"

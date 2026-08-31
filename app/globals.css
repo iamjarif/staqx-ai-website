@@ -138,3 +138,18 @@ body {
   background-color: var(--color-primary-500);
   color: var(--color-text-inverse);
 }
+
+@media (hover: hover) and (pointer: fine) {
+  .services-grid:hover .service-card:not(:hover) {
+    opacity: 0.4;
+    filter: blur(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card {
+    filter: none;
+    opacity: 1;
+    transition: none;
+  }
+}
