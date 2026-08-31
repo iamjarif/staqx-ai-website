@@ -2,7 +2,12 @@ import "server-only";
 
 import { buildContactInquiryEmail } from "@/lib/email/templates/contact-inquiry";
 import type { ContactFormPayload } from "@/lib/email/templates/contact-inquiry";
-import { getResendClient, isResendConfigured } from "@/lib/resend";
+import {
+  getResendClient,
+  getResendContactToEmail,
+  getResendFromEmail,
+  isResendConfigured,
+} from "@/lib/resend";
 
 export type { ContactFormPayload };
 
@@ -12,8 +17,8 @@ export async function sendContactEmail(payload: ContactFormPayload) {
   }
 
   const resend = getResendClient();
-  const from = process.env.RESEND_FROM_EMAIL;
-  const to = process.env.RESEND_CONTACT_TO_EMAIL;
+  const from = getResendFromEmail();
+  const to = getResendContactToEmail();
 
   if (!resend || !from || !to) {
     throw new Error("Resend is not configured.");

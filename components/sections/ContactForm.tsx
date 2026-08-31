@@ -116,10 +116,15 @@ export function ContactForm() {
       });
 
       const data = (await response.json().catch(() => null)) as
-        | { error?: string }
+        | { error?: string; code?: string; debug?: string }
         | null;
 
       if (!response.ok) {
+        console.error("[contact-form] submission failed", {
+          status: response.status,
+          code: data?.code,
+          debug: data?.debug,
+        });
         setStatus("error");
         setErrorMessage(
           data?.error ?? "Unable to send your message. Please try again."

@@ -29,17 +29,42 @@ function isValidEmail(value: string): boolean {
   return EMAIL_PATTERN.test(value);
 }
 
+function normalizeOrigin(value: string): string {
+  return value.replace(/\/$/, "");
+}
+
+function addOrigin(origins: Set<string>, value: string | undefined) {
+  if (!value?.trim()) return;
+  const trimmed = value.trim().replace(/\/$/, "");
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    origins.add(normalizeOrigin(trimmed));
+    return;
+  }
+  origins.add(normalizeOrigin(`https://${trimmed}`));
+}
+
 function allowedOrigins(): string[] {
   const origins = new Set<string>([
-    siteConfig.url.replace(/\/$/, ""),
+    normalizeOrigin(siteConfig.url),
     "http://localhost:3000",
     "http://localhost:3001",
   ]);
 
-  const publicUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-  if (publicUrl) origins.add(publicUrl);
+  addOrigin(origins, process.env.NEXT_PUBLIC_SITE_URL);
+
+  for (const vercelHost of [
+    process.env.VERCEL_URL,
+    process.env.VERCEL_BRANCH_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+  ]) {
+    addOrigin(origins, vercelHost);
+  }
 
   return [...origins];
+}
+
+function requestOrigin(request: Request): string | null {
+  return originFromUrl(request.url);
 }
 
 function originFromUrl(value: string | null): string | null {
@@ -55,14 +80,31 @@ function originFromUrl(value: string | null): string | null {
 export function isTrustedContactOrigin(request: Request): boolean {
   if (process.env.NODE_ENV !== "production") return true;
 
-  const allowed = allowedOrigins();
+  const hostOrigin = requestOrigin(request);
   const origin = originFromUrl(request.headers.get("origin"));
-  if (origin && allowed.includes(origin)) return true;
-
   const refererOrigin = originFromUrl(request.headers.get("referer"));
+
+  // Same-origin browser submissions (e.g. Vercel *.vercel.app before custom domain).
+  if (hostOrigin && origin && origin === hostOrigin) return true;
+  if (hostOrigin && refererOrigin && refererOrigin === hostOrigin) return true;
+  if (request.headers.get("sec-fetch-site") === "same-origin") return true;
+
+  const allowed = allowedOrigins();
+  if (origin && allowed.includes(origin)) return true;
   if (refererOrigin && allowed.includes(refererOrigin)) return true;
 
   return false;
+}
+
+/** For structured logging when origin checks fail in production. */
+export function describeContactOrigin(request: Request) {
+  return {
+    requestOrigin: requestOrigin(request),
+    origin: originFromUrl(request.headers.get("origin")),
+    refererOrigin: originFromUrl(request.headers.get("referer")),
+    secFetchSite: request.headers.get("sec-fetch-site"),
+    allowedOrigins: allowedOrigins(),
+  };
 }
 
 export function isBodyWithinLimit(request: Request): boolean {

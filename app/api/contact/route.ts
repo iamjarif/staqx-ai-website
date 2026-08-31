@@ -1,47 +1,76 @@
 import { NextResponse } from "next/server";
 
+import { contactErrorResponse, logContactFailure } from "@/lib/contact-api";
 import { sendContactEmail } from "@/lib/email/contact";
-import { isResendConfigured } from "@/lib/resend";
+import { getMissingResendEnvVars, isResendConfigured } from "@/lib/resend";
 import {
+  describeContactOrigin,
   isBodyWithinLimit,
   isTrustedContactOrigin,
   parseContactPayload,
 } from "@/lib/security/contact";
 import { getClientIp, rateLimit } from "@/lib/security/rate-limit";
 
-const GENERIC_ERROR = "Unable to send your message. Please try again.";
-
 export async function POST(request: Request) {
   if (!isTrustedContactOrigin(request)) {
-    return NextResponse.json({ error: GENERIC_ERROR }, { status: 403 });
+    return contactErrorResponse(
+      NextResponse,
+      "ORIGIN_FORBIDDEN",
+      403,
+      "Contact submission blocked: request origin is not trusted.",
+      describeContactOrigin(request)
+    );
   }
 
   if (!isBodyWithinLimit(request)) {
-    return NextResponse.json({ error: GENERIC_ERROR }, { status: 413 });
+    return contactErrorResponse(
+      NextResponse,
+      "BODY_TOO_LARGE",
+      413,
+      "Contact submission blocked: request body exceeds size limit."
+    );
   }
 
   const ip = getClientIp(request);
   const limit = rateLimit(`contact:${ip}`);
   if (!limit.ok) {
-    return NextResponse.json(
-      { error: "Too many requests. Please wait before sending another message." },
+    return contactErrorResponse(
+      NextResponse,
+      "RATE_LIMITED",
+      429,
+      "Contact submission rate limited.",
+      { ip },
       {
-        status: 429,
         headers: { "Retry-After": String(limit.retryAfterSeconds) },
+        userMessage:
+          "Too many requests. Please wait before sending another message.",
       }
     );
   }
 
   if (!isResendConfigured()) {
-    return NextResponse.json({ error: GENERIC_ERROR }, { status: 503 });
+    const missing = getMissingResendEnvVars();
+    return contactErrorResponse(
+      NextResponse,
+      "RESEND_NOT_CONFIGURED",
+      503,
+      `Resend is not configured. Missing env: ${missing.join(", ")}`,
+      { missingEnv: missing }
+    );
   }
 
   let body: unknown;
 
   try {
     body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+  } catch (error) {
+    return contactErrorResponse(
+      NextResponse,
+      "INVALID_BODY",
+      400,
+      "Contact submission failed: invalid JSON body.",
+      { error }
+    );
   }
 
   const parsed = parseContactPayload(body);
@@ -51,23 +80,45 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true });
     }
 
+    logContactFailure(
+      "INVALID_PAYLOAD",
+      "Contact submission rejected: payload failed validation."
+    );
+
     return NextResponse.json(
-      { error: "Please fill in all fields with a valid email." },
+      {
+        error: "Please fill in all fields with a valid email.",
+        code: "INVALID_PAYLOAD" as const,
+      },
       { status: 400 }
     );
   }
 
   try {
-    const { error } = await sendContactEmail(parsed.payload);
+    const result = await sendContactEmail(parsed.payload);
 
-    if (error) {
-      console.error("Resend contact email failed");
-      return NextResponse.json({ error: GENERIC_ERROR }, { status: 502 });
+    if (result.error) {
+      return contactErrorResponse(
+        NextResponse,
+        "RESEND_SEND_FAILED",
+        502,
+        "Resend rejected the contact email send.",
+        {
+          resendError: result.error,
+          from: process.env.RESEND_FROM_EMAIL,
+          to: process.env.RESEND_CONTACT_TO_EMAIL,
+        }
+      );
     }
 
     return NextResponse.json({ ok: true });
-  } catch {
-    console.error("Contact form submission failed");
-    return NextResponse.json({ error: GENERIC_ERROR }, { status: 500 });
+  } catch (error) {
+    return contactErrorResponse(
+      NextResponse,
+      "INTERNAL_ERROR",
+      500,
+      "Contact submission threw an unexpected error.",
+      { error }
+    );
   }
 }
