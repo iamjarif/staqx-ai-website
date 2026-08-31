@@ -22,8 +22,8 @@ export default function Home() {
       <Header />
       <main className="bg-surface-page">
         <HeroSection />
-        <MissionSection />
         <CombinedSectionsGroup>
+          <MissionSection />
           <ExpertiseSection />
           <WorkstepSection />
         </CombinedSectionsGroup>

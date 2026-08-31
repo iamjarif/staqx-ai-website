@@ -3,7 +3,11 @@ import { SectionReveal } from "@/components/ui/section-reveal";
 
 export function ExpertiseSection() {
   return (
-    <SectionReveal id="services" className="relative max-lg:py-12">
+    <SectionReveal
+      id="services"
+      data-bg-anchor=""
+      className="relative py-12 lg:py-40"
+    >
       <ExpertiseCarousel />
     </SectionReveal>
   );

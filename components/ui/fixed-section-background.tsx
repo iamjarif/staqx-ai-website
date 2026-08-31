@@ -50,18 +50,20 @@ export function FixedSectionBackground({
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
 
-    const rect = wrapper.getBoundingClientRect();
-    const intersects = rect.bottom > 0 && rect.top < window.innerHeight;
+    const clipRect = wrapper.getBoundingClientRect();
+    const anchor = wrapper.querySelector("[data-bg-anchor]");
+    const originRect = (anchor ?? wrapper).getBoundingClientRect();
+    const intersects = clipRect.bottom > 0 && clipRect.top < window.innerHeight;
 
     setIsActive(intersects);
-    setSectionTop(rect.top);
+    setSectionTop(originRect.top);
 
     if (!intersects) {
       setClipPath("inset(100% 100% 100% 100%)");
       return;
     }
 
-    const { top, right, bottom, left } = getClipInsets(rect);
+    const { top, right, bottom, left } = getClipInsets(clipRect);
     setClipPath(`inset(${top}px ${right}px ${bottom}px ${left}px)`);
   }, [isDesktop]);
 
