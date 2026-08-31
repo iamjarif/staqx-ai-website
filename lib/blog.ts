@@ -1,4 +1,5 @@
 import type { PortableTextBlock } from "@portabletext/types";
+import { cache } from "react";
 
 import { estimateReadingTime } from "@/lib/blog-utils";
 import { getSanityClient, isSanityConfigured } from "@/lib/sanity/client";
@@ -52,7 +53,7 @@ function normalizePost(raw: SanityPostRaw): BlogPost {
   };
 }
 
-export async function getBlogPosts(
+export const getBlogPosts = cache(async function getBlogPosts(
   page = 1,
   pageSize = 10
 ): Promise<BlogListResult> {
@@ -80,9 +81,11 @@ export async function getBlogPosts(
     page: safePage,
     pageSize,
   };
-}
+});
 
-export async function getAllBlogPosts(): Promise<BlogPost[]> {
+export const getAllBlogPosts = cache(async function getAllBlogPosts(): Promise<
+  BlogPost[]
+> {
   if (!isSanityConfigured()) return [];
 
   const client = getSanityClient();
@@ -95,9 +98,11 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
   );
 
   return raw.map(normalizePost);
-}
+});
 
-export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+export const getBlogPost = cache(async function getBlogPost(
+  slug: string
+): Promise<BlogPost | null> {
   if (!isSanityConfigured()) return null;
 
   const client = getSanityClient();
@@ -111,9 +116,9 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 
   if (!raw) return null;
   return normalizePost(raw);
-}
+});
 
-export async function getRelatedPosts(
+export const getRelatedPosts = cache(async function getRelatedPosts(
   slug: string,
   limit = 3
 ): Promise<BlogPost[]> {
@@ -129,4 +134,4 @@ export async function getRelatedPosts(
   );
 
   return raw.map(normalizePost);
-}
+});

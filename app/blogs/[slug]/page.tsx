@@ -67,13 +67,14 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = await getBlogPost(slug);
+  const [post, relatedPosts] = await Promise.all([
+    getBlogPost(slug),
+    getRelatedPosts(slug, 3),
+  ]);
 
   if (!post) {
     notFound();
   }
-
-  const relatedPosts = await getRelatedPosts(slug, 3);
 
   return (
     <>

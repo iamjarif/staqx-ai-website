@@ -1,4 +1,3 @@
-import { LinkedinLogo } from "@phosphor-icons/react/dist/ssr/LinkedinLogo";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
@@ -40,18 +39,6 @@ export function Footer() {
           <p className="text-label-small text-text-disabled min-w-0">
             {footerContent.copyright}
           </p>
-          {siteConfig.socialLinks.map((link) => (
-            <Link
-              key={link.platform}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={link.platform}
-              className="text-text-primary flex size-11 shrink-0 items-center justify-center"
-            >
-              <LinkedinLogo size={24} weight="duotone" aria-hidden />
-            </Link>
-          ))}
         </div>
       </Container>
     </footer>

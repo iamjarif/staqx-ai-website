@@ -8,7 +8,7 @@ import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
 import { getAllBlogPosts } from "@/lib/blog";
 import { createMetadata } from "@/lib/metadata";
-import { breadcrumbSchema } from "@/lib/schema";
+import { blogIndexSchema, breadcrumbSchema } from "@/lib/schema";
 
 export const revalidate = 60;
 
@@ -29,10 +29,13 @@ export default async function BlogsPage() {
   return (
     <>
       <JsonLd
-        data={breadcrumbSchema([
-          { name: "Home", path: "/" },
-          { name: "Blogs", path: "/blogs" },
-        ])}
+        data={[
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Blogs", path: "/blogs" },
+          ]),
+          blogIndexSchema(posts),
+        ]}
       />
       <Header />
       <main className="bg-surface-page pb-24 lg:pb-40">

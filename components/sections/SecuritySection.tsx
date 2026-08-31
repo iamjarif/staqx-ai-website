@@ -37,7 +37,7 @@ export function SecuritySection() {
           <SectionRevealItem className="relative h-[220px] w-full overflow-hidden rounded-lg sm:h-[280px] lg:h-[496px] lg:w-[532px] lg:shrink-0">
             <Image
               src="/images/homepage/odc-server-room.jpg"
-              alt="Boston Semiconductor offshore development center server room"
+              alt="StaqX.ai offshore development center server room"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 532px"

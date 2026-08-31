@@ -1,6 +1,7 @@
 "use client";
 
-import { List, X } from "@phosphor-icons/react";
+import { List } from "@phosphor-icons/react/dist/ssr/List";
+import { X } from "@phosphor-icons/react/dist/ssr/X";
 import { useLenis } from "lenis/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Link from "next/link";

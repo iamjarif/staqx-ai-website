@@ -1,9 +1,14 @@
-import Link from "next/link";
-
-import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
+import { createMetadata } from "@/lib/metadata";
+
+export const metadata = createMetadata({
+  title: "Page not found",
+  description: "This page does not exist or has been moved.",
+  robots: { index: false, follow: false },
+});
 
 export default function NotFound() {
   return (

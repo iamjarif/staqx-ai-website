@@ -1,6 +1,7 @@
 "use client";
 
-import { CaretDown, CheckCircle } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/ssr/CaretDown";
+import { CheckCircle } from "@phosphor-icons/react/dist/ssr/CheckCircle";
 import { useLenis } from "lenis/react";
 import {
   AnimatePresence,
@@ -219,6 +220,8 @@ function WorkstepBackgroundLayer({
         className="object-cover"
         sizes="(max-width: 1264px) 100vw, 1264px"
         quality={70}
+        loading="lazy"
+        fetchPriority="low"
       />
     </motion.div>
   );
@@ -240,6 +243,8 @@ function WorkstepBackgroundStatic({ slideProgress }: { slideProgress: number }) 
             className="object-cover"
             sizes="(max-width: 1264px) 100vw, 1264px"
             quality={70}
+            loading="lazy"
+            fetchPriority="low"
           />
         </div>
       ))}

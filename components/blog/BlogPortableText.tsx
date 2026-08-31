@@ -1,8 +1,50 @@
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import Image from "next/image";
+import Link from "next/link";
 
 import type { BlogHeading } from "@/lib/blog-utils";
+import { siteConfig } from "@/config/site";
+
+function sanitizeBlogHref(
+  href: string
+): { kind: "internal"; path: string } | { kind: "external"; href: string } | null {
+  const trimmed = href.trim();
+  if (!trimmed) return null;
+
+  const lower = trimmed.toLowerCase();
+  if (
+    lower.startsWith("javascript:") ||
+    lower.startsWith("data:") ||
+    lower.startsWith("vbscript:") ||
+    trimmed.startsWith("//")
+  ) {
+    return null;
+  }
+
+  if (trimmed.startsWith("#") || (trimmed.startsWith("/") && !trimmed.startsWith("//"))) {
+    return { kind: "internal", path: trimmed };
+  }
+
+  try {
+    const url = new URL(trimmed);
+    if (!["http:", "https:", "mailto:"].includes(url.protocol)) {
+      return null;
+    }
+
+    const siteOrigin = new URL(siteConfig.url).origin;
+    if (url.origin === siteOrigin) {
+      return {
+        kind: "internal",
+        path: `${url.pathname}${url.search}${url.hash}` || "/",
+      };
+    }
+
+    return { kind: "external", href: url.href };
+  } catch {
+    return null;
+  }
+}
 
 function createPortableTextComponents(
   headings: BlogHeading[]
@@ -87,14 +129,30 @@ function createPortableTextComponents(
         </code>
       ),
       link: ({ children, value }) => {
-        const href = typeof value?.href === "string" ? value.href : "#";
+        const href = typeof value?.href === "string" ? value.href : "";
+        const safe = sanitizeBlogHref(href);
+
+        if (!safe) {
+          return <span>{children}</span>;
+        }
+
+        if (safe.kind === "internal") {
+          return (
+            <Link
+              href={safe.path}
+              className="text-text-link underline-offset-4 hover:text-text-link-hover hover:underline"
+            >
+              {children}
+            </Link>
+          );
+        }
 
         return (
           <a
-            href={href}
+            href={safe.href}
             className="text-text-link underline-offset-4 hover:text-text-link-hover hover:underline"
-            target={href.startsWith("http") ? "_blank" : undefined}
-            rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+            target={safe.href.startsWith("mailto:") ? undefined : "_blank"}
+            rel={safe.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
           >
             {children}
           </a>

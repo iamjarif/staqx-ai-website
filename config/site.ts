@@ -11,12 +11,7 @@ export const siteConfig = {
     { label: "Blogs", href: "/blogs" },
     { label: "Contact", href: "#contact" },
   ] as NavItem[],
-  socialLinks: [
-    {
-      platform: "LinkedIn",
-      href: "https://www.linkedin.com/company/boston-semiconductor",
-    },
-  ] as SocialLink[],
+  socialLinks: [] as SocialLink[],
 } as const;
 
 export type SiteConfig = typeof siteConfig;

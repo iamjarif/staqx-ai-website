@@ -1,20 +1,17 @@
 "use client";
 
-import {
-  CheckCircle,
-  FingerprintSimple,
-  FolderSimpleLock,
-  Lock,
-  ShieldCheck,
-  type Icon,
-} from "@phosphor-icons/react";
+import { CheckCircle } from "@phosphor-icons/react/dist/ssr/CheckCircle";
+import { FingerprintSimple } from "@phosphor-icons/react/dist/ssr/FingerprintSimple";
+import { FolderSimpleLock } from "@phosphor-icons/react/dist/ssr/FolderSimpleLock";
+import { Lock } from "@phosphor-icons/react/dist/ssr/Lock";
+import { ShieldCheck } from "@phosphor-icons/react/dist/ssr/ShieldCheck";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 
 import { securityCards, type SecurityCard, type SecurityCardIcon } from "@/lib/homepage-data";
 import { cn } from "@/lib/utils";
 
-const securityIcons: Record<SecurityCardIcon, Icon> = {
+const securityIcons = {
   "shield-check": ShieldCheck,
   "fingerprint-simple": FingerprintSimple,
   "folder-simple-lock": FolderSimpleLock,

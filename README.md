@@ -97,6 +97,9 @@ npm run start
 | `NEXT_PUBLIC_SANITY_DATASET` | No | Sanity dataset name (default: `production`) |
 | `NEXT_PUBLIC_SANITY_API_VERSION` | No | Sanity API version (default: `2024-01-01`) |
 | `SANITY_API_READ_TOKEN` | No | Read token — only needed if the Sanity dataset is private |
+| `RESEND_API_KEY` | For contact form | Resend API key from [resend.com/api-keys](https://resend.com/api-keys) |
+| `RESEND_FROM_EMAIL` | For contact form | Verified sender address (e.g. `StaqX.ai <hello@staqx.ai>`). Use `onboarding@resend.dev` for testing |
+| `RESEND_CONTACT_TO_EMAIL` | For contact form | Inbox that receives contact form submissions (e.g. `info@staqx.ai`) |
 
 Never commit `.env.local` or any file containing secrets. `.env.example` is the reference for all supported variables.
 
